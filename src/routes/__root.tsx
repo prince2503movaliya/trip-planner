@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { SiteHeader } from "@/components/site-header";
 
 function NotFoundComponent() {
   return (
@@ -72,11 +73,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Loop — Plan trips you'll actually take" },
+      { name: "description", content: "A calm, beautiful trip planner. Build day-by-day itineraries you'll love." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Loop — Plan trips you'll actually take" },
+      { property: "og:description", content: "A calm, beautiful trip planner." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -113,7 +114,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <div className="flex min-h-screen flex-col">
+        <SiteHeader />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <footer className="border-t border-border/60 py-8 text-center text-xs text-muted-foreground">
+          Made for travelers · Loop
+        </footer>
+      </div>
     </QueryClientProvider>
   );
 }
