@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TripsNewRouteImport } from './routes/trips.new'
+import { Route as TripsTripIdRouteImport } from './routes/trips.$tripId'
 
 const TripsRoute = TripsRouteImport.update({
   id: '/trips',
@@ -28,29 +29,37 @@ const TripsNewRoute = TripsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => TripsRoute,
 } as any)
+const TripsTripIdRoute = TripsTripIdRouteImport.update({
+  id: '/$tripId',
+  path: '/$tripId',
+  getParentRoute: () => TripsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/trips': typeof TripsRouteWithChildren
+  '/trips/$tripId': typeof TripsTripIdRoute
   '/trips/new': typeof TripsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/trips': typeof TripsRouteWithChildren
+  '/trips/$tripId': typeof TripsTripIdRoute
   '/trips/new': typeof TripsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/trips': typeof TripsRouteWithChildren
+  '/trips/$tripId': typeof TripsTripIdRoute
   '/trips/new': typeof TripsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/trips' | '/trips/new'
+  fullPaths: '/' | '/trips' | '/trips/$tripId' | '/trips/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/trips' | '/trips/new'
-  id: '__root__' | '/' | '/trips' | '/trips/new'
+  to: '/' | '/trips' | '/trips/$tripId' | '/trips/new'
+  id: '__root__' | '/' | '/trips' | '/trips/$tripId' | '/trips/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -81,14 +90,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripsNewRouteImport
       parentRoute: typeof TripsRoute
     }
+    '/trips/$tripId': {
+      id: '/trips/$tripId'
+      path: '/$tripId'
+      fullPath: '/trips/$tripId'
+      preLoaderRoute: typeof TripsTripIdRouteImport
+      parentRoute: typeof TripsRoute
+    }
   }
 }
 
 interface TripsRouteChildren {
+  TripsTripIdRoute: typeof TripsTripIdRoute
   TripsNewRoute: typeof TripsNewRoute
 }
 
 const TripsRouteChildren: TripsRouteChildren = {
+  TripsTripIdRoute: TripsTripIdRoute,
   TripsNewRoute: TripsNewRoute,
 }
 
